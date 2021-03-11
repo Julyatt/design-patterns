@@ -1,7 +1,13 @@
 package com.julyatt.demo.create.factory.abstractfactory;
 
-public class HpMouse extends Mouse {
-    //private static final Logger LOGGER = LoggerFactory.getLogger(HpMouse.class);
+/**
+ *  Description
+ *  HP鼠标
+ *  @author guosh
+ *  @date 2019-06-27 16:34
+ *
+ */
+public class HpMouse extends AbstractMouse {
 
     @Override
     public void click() {

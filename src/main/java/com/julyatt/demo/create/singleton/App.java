@@ -1,5 +1,9 @@
 package com.julyatt.demo.create.singleton;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.concurrent.*;
+
 /**
  * Description
  *
@@ -12,8 +16,15 @@ public class App {
         Singleton2.getInstance();
         Singleton2.getInstance2();
 
-        for (int i = 0; i < 1000; i++) {
-            new Thread(() -> System.out.println(Singleton1.getInstance().hashCode())).start();
+        ThreadFactory threadFactory = Executors.defaultThreadFactory();
+        BlockingQueue<Runnable> runnables = new ArrayBlockingQueue<Runnable>(16);
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(4, 4, 0L,
+                TimeUnit.MILLISECONDS, runnables, threadFactory);
+
+        for (int i = 0; i < 100; i++) {
+            threadPoolExecutor.execute(() -> System.out.println(Singleton2.getInstance().hashCode()));
         }
+        threadPoolExecutor.shutdown();
+
     }
 }
